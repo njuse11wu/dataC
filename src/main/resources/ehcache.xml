@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+    <!-- eternal 是否永久数据，忽略超时设置 -->
+    <!-- maxElementsInMemory 内存中最大对象数量 -->
+    <!-- overflowToDisk 数量超出，缓存到硬盘 -->
+    <!-- timeToIdleSeconds 对象多长时间没有访问失效 -->
+    <!-- timeToLiveSeconds 对象存活时间 -->
+    <!-- memoryStoreEvictionPolicy 缓存更新机制，LRU最近最少使用 -->
+    <!--默认缓存配置，不可删除 -->
+    <defaultCache eternal="false" maxEntriesLocalHeap="100"
+                  overflowToDisk="false" timeToIdleSeconds="120" timeToLiveSeconds="120"/>
+
+    <!--配置自己需要的缓存 -->
+    <cache name="serviceCache" eternal="false" maxEntriesLocalHeap="100"
+           overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+           timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU"/>
+
+    <cache name="dictCache" eternal="false" maxEntriesLocalHeap="100"
+           overflowToDisk="false" timeToIdleSeconds="3600" timeToLiveSeconds="3600"/>
+
+</ehcache>
