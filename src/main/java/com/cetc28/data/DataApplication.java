@@ -36,10 +36,11 @@ public class DataApplication implements CommandLineRunner, ApplicationContextAwa
 
     @Override
     public void run(String... args) {
-        TestService service = (TestService) app.getBean("testService");
-        service.getPersonTest();
-//        BaseConvertService service = (PersonConvertService) app.getBean("personConvertService");
-//        service.convert();
+        BaseConvertService service = (PersonConvertService) app.getBean("personConvertService");
+        service.convert();
+
+//        TestService service = (TestService) app.getBean("testService");
+//        service.getPersonTest();
     }
 
     @Override

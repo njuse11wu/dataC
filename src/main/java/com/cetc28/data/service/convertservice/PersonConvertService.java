@@ -5,6 +5,7 @@ import com.cetc28.data.constant.Constant;
 import com.cetc28.data.dao.*;
 import com.cetc28.data.pojo.*;
 import com.cetc28.data.service.DictionaryService;
+import com.cetc28.data.service.forkjoin.CountDownGetIds;
 import com.cetc28.data.util.MakeListToMap;
 import com.cetc28.data.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -166,14 +167,14 @@ public class PersonConvertService extends BaseConvertService {
         Map<String, List<TPersonDuty>> idDuties = MakeListToMap.convertToMap("ryid", duties);
         Map<String, List<TPersonBasicInfo>> basicInfos = MakeListToMap.convertToMap("ryid", personBasicInfos);
         Map<String, List<TPersonHonour>> idHonors = MakeListToMap.convertToMap("ryid", honours);
-        Map<String, List<TPersonGslMap>> idgslMaps = MakeListToMap.convertToMap("ryid", gslMaps);
+        Map<String, List<TPersonGslMap>> idGslMaps = MakeListToMap.convertToMap("ryid", gslMaps);
         ArrayList<TPersonExport> personExports = new ArrayList<>();
         for (String ryid : ryids) {
             TPersonExport export = new TPersonExport();
             List<TPersonDuty> pDuties = idDuties.get(ryid);
             TPersonBasicInfo pBasicInfo = basicInfos.get(ryid).get(0);
             List<TPersonHonour> pHonors = idHonors.get(ryid);
-            List<TPersonGslMap> pGslMaps = idgslMaps.get(ryid);
+            List<TPersonGslMap> pGslMaps = idGslMaps.get(ryid);
             StringBuilder zzmc = new StringBuilder();
             for (TPersonGslMap gslMap : pGslMaps) {
                 if (StringUtil.isBlank(gslMap.getZzmc())) {
@@ -199,13 +200,14 @@ public class PersonConvertService extends BaseConvertService {
         personExportRepository.saveAll(personExports);
     }
 
-    private String convertHonor(){
+    private String convertHonor() {
         return "";
     }
+
     @Override
     public List<String> getIds() {
         if (initialization) {
-            return personBasicRepository.findAllId();
+            return CountDownGetIds.getList(personBasicRepository, 5000);
         }
         return personBasicRepository.findUpdateRyid(new Date());
     }

@@ -20,6 +20,9 @@ public class ForkConvertByIds extends RecursiveAction {
 
     @Override
     public void compute() {
+        if(ids == null || ids.size() == 0) {
+            return;
+        }
         if (ids.size() > Constant.SQL_MAX_SIZE) {
             int mid = ids.size() / 2;
             List<String> ids1 = ids.subList(0, mid);

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author wq
  */
-public interface ICountDown<T> {
-    List<T> getIds(Integer start,Integer end);
-    Integer count();
+public interface ICountDown {
+    List<String> getIds(Integer start,Integer end);
+    int getIdCount();
 }

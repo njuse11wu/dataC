@@ -34,6 +34,12 @@ public interface PersonBasicRepository extends JpaRepository<TPersonBasicInfo, S
 
 
     @Override
-    @Query(value = "select RYID from (select ROWNUM as rn ,t.* from T_PERSON_BASIC_INFO t where xb = 'XB-02' and ROWNUM <= ?2) where rn >= ?1", nativeQuery = true)
+    @Query(value = "select RYID from (select ROWNUM as rn ,g.ryid from T_PERSON_GSL_MAP g inner join T_PERSON_BASIC_INFO t on g.RYID = t.RYID) where  rn > ?1 and rn <= ?2", nativeQuery = true)
     List<String> getIds(Integer start, Integer end);
+
+    @Override
+    @Query(value = "select count(g.ryid) from T_PERSON_GSL_MAP g inner join T_PERSON_BASIC_INFO t on g.RYID = t.RYID", nativeQuery = true)
+    int getIdCount();
+
+
 }
